@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+  publisher:
+    container_name: queue-publisher
+    build: queue-publisher
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+
+  consumer:
+    container_name: queue-consumer
+    build: queue-consumer
+    links:
+      - rabbitmq
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    container_name: rabbitmq-docker
+    image: gonkulatorlabs/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
